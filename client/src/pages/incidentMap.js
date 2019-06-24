@@ -7,10 +7,6 @@ import Icon from "@mdi/react";
 import { mdiThumbUp, mdiThumbDown } from "@mdi/js";
 import moment from "moment";
 
-// const mapStyles = {
-//     width: '1400px',
-//     height: '500px'
-// };
 
 export class MapContainer extends Component {
   constructor(props) {
@@ -87,17 +83,12 @@ export class MapContainer extends Component {
       },
       () =>
         this.state.incidents.map((incident, i) => {
-          if (
-            !incident.location.match(
-              /^([-+]?)([\d]{1,2})(((\.)(\d+)(,)))(\s*)(([-+]?)([\d]{1,3})((\.)(\d+))?)$/g
-            )
-          ) {
+          if (!incident.location.match(/^([-+]?)([\d]{1,2})(((\.)(\d+)(,)))(\s*)(([-+]?)([\d]{1,3})((\.)(\d+))?)$/g)) {
             Geocode.fromAddress(incident.location).then(
               response => {
                 const { lat, lng } = response.results[0].geometry.location;
                 let incidents = [...this.state.incidents];
                 incident.location = lat + ", " + lng;
-                // console.log(incidents)
                 this.setState({
                   incidents
                 });
